@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <h2>Register</h2>
+    <form id="register-form">
+        <input type="email" id="user-email" placeholder="Enter email" required>
+        <input type="password" id="user-pass" placeholder="Enter password" required>
+        <button type="submit">Register</button>
+    </form>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+      import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "your-api-key",
+        authDomain: "your-project-id.firebaseapp.com",
+        projectId: "your-project-id",
+        storageBucket: "your-project-id.appspot.com",
+        messagingSenderId: "your-sender-id",
+        appId: "your-app-id",
+        measurementId: "your-measurement-id"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      document.getElementById('register-form').addEventListener('submit', function(event) {
+          event.preventDefault();
+          const email = document.getElementById('user-email').value;
+          const password = document.getElementById('user-pass').value;
+
+          createUserWithEmailAndPassword(auth, email, password)
+              .then((userCredential) => {
+                  alert('User created and signed in!');
+                  // Optional: Redirect to another page
+              })
+              .catch((error) => {
+                  alert('Error creating user: ' + error.message);
+              });
+      });
+    </script>
+</body>
+</html>
